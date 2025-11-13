@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springboot-config
+data:
+  SPRING_DATASOURCE_URL: jdbc:mysql://gadgetdb.cqhgqw6isylb.us-east-1.rds.amazonaws.com:3306/gadgetdb
+  SPRING_DATASOURCE_USERNAME: oladayo
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update
