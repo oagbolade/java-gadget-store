@@ -6,7 +6,7 @@ shift
 cmd="$@"
 
 until nc -z "$host" 1433; do
-  echo "⏳ Waiting for SQL Server ($host:1433) to be ready..."
+  echo "⏳ Waiting for SQL Server ($host) to be ready..."
   sleep 3
 done
 

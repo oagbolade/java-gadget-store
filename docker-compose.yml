@@ -1,31 +1,38 @@
 version: '3.8'
-services:
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      SA_PASSWORD: "Myp@ssw0rd!1"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql-data:/var/opt/mssql
 
-  redis:
-    image: redis:7
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: gadetdb
+      MYSQL_USER: oladayo
+      MYSQL_PASSWORD: mypassword
     ports:
-      - "6379:6379"
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
   app:
     build: .
-    depends_on:
-      - mssql
-      - redis
+    container_name: springboot-app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gadetdb
+      SPRING_DATASOURCE_USERNAME: oladayo
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:sqlserver://mssql:1433;databaseName=gadgetdb;encrypt=false
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=Myp@ssw0rd!1
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+
 volumes:
-  mssql-data:
+  mysql_data:
+
+networks:
+  mynetwork:

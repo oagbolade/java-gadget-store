@@ -1,8 +1,8 @@
 spring:
   datasource:
-      url: jdbc:sqlserver://mssql:1433;databaseName=gadgetdb;encrypt=false
-      username: sa
-      password: Myp@ssw0rd!1
+    url: jdbc:sqlserver://mssql:1433;databaseName=gadgetdb;encrypt=false
+    username: sa
+    password: Myp@ssw0rd#2025
   jpa:
     hibernate:
       ddl-auto: update
@@ -10,10 +10,16 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
-  redis:
-    host: localhost
-    port: 6379
-    timeout: 2000
-
+  cache:
+    type: redis
+  data:
+    redis:
+      host: redis
+      port: 6379
+      timeout: 2000
+  app:
+    jwt:
+      secret: "change-me-to-a-very-long-random-string-at-least-32-chars"
+      expiration-ms: 3600000
 server:
   port: 8080

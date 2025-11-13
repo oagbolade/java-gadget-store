@@ -10,12 +10,13 @@ FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 
 # Install netcat (for wait-for-it.sh)
-RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 
-COPY wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
-
-ENTRYPOINT ["/app/wait-for-it.sh", "mssql", "java", "-jar", "app.jar"]
+#COPY wait-for-it.sh /app/wait-for-it.sh
+#RUN chmod +x /app/wait-for-it.sh
+#
+#ENTRYPOINT ["/app/wait-for-it.sh", "mssql", "java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
